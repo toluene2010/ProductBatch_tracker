@@ -20,21 +20,20 @@ from kivy.uix.textinput import TextInput
 
 
 # ============================================================
-# 1. CONFIG
+# 1. CONFIG  — REPLACE WITH YOUR FORM URL
 # ============================================================
 FORM_URL = "https://docs.google.com/forms/d/e/YOUR_BOTTLING_FORM_ID/formResponse"
 
 ENTRY_IDS = {
-    "date_year":      "entry.2136503892_year",
-    "date_month":     "entry.2136503892_month",
-    "date_day":       "entry.2136503892_day",
-    "production":     "entry.1158157721",
-    "batch_no":       "entry.506973404",
-    "batch_size":     "entry.1883776086",
-    "spare":          "entry.1780056324",   # 4th ID — check if your form uses it
+    "date_year":  "entry.2136503892_year",
+    "date_month": "entry.2136503892_month",
+    "date_day":   "entry.2136503892_day",
+    "production": "entry.1158157721",
+    "batch_no":   "entry.506973404",
+    "batch_size": "entry.1883776086",
 }
 
-QUEUE_FILE = "bottling_queue.json"
+QUEUE_FILE = "production_queue.json"
 
 
 # ============================================================
@@ -281,7 +280,7 @@ def flush_queue():
 
 
 # ============================================================
-# 4. SEARCHABLE PRODUCT PICKER (with custom entry)
+# 4. SEARCHABLE PICKER (with custom entry)
 # ============================================================
 class ProductPicker(Popup):
     def __init__(self, on_pick, **kwargs):
@@ -290,7 +289,6 @@ class ProductPicker(Popup):
 
         root = BoxLayout(orientation="vertical", padding=8, spacing=8)
 
-        # Custom entry row
         custom_row = BoxLayout(size_hint_y=None, height=dp(48), spacing=dp(6))
         self.custom_input = TextInput(hint_text="Or type custom product...",
                                       multiline=False, font_size=dp(14))
@@ -379,17 +377,16 @@ class PreviewPopup(Popup):
 # ============================================================
 # 6. MAIN UI
 # ============================================================
-class BottlingForm(BoxLayout):
+class ProductionBatchTrackerForm(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(orientation="vertical", **kwargs)
         Window.softinput_mode = "below_target"
 
         self.selected_production = ""
-        self.fields = {}
 
         # Header
         self.add_widget(Label(
-            text="Bottling Production Entry",
+            text="Production Batch Tracker",
             font_size=dp(20), bold=True, size_hint_y=None,
             height=dp(48), color=(0.15, 0.45, 0.85, 1),
         ))
@@ -402,13 +399,11 @@ class BottlingForm(BoxLayout):
 
         # Date
         form.add_widget(Label(text="Date:", size_hint_y=None, height=dp(24),
-                              halign="left", font_size=dp(14),
-                              text_size=(None, None)))
+                              halign="left", font_size=dp(14)))
         self.date_input = TextInput(text=datetime.now().strftime("%Y-%m-%d"),
                                     multiline=False, size_hint_y=None,
                                     height=dp(50), font_size=dp(15))
         form.add_widget(self.date_input)
-        self.fields["date"] = self.date_input
 
         # Production
         form.add_widget(Label(text="Production Name:", size_hint_y=None,
@@ -426,7 +421,6 @@ class BottlingForm(BoxLayout):
                                      size_hint_y=None, height=dp(50),
                                      font_size=dp(15))
         form.add_widget(self.batch_input)
-        self.fields["batch_no"] = self.batch_input
 
         # Batch Size
         form.add_widget(Label(text="Batch Size (bottles):", size_hint_y=None,
@@ -435,7 +429,6 @@ class BottlingForm(BoxLayout):
                                     input_type="number", size_hint_y=None,
                                     height=dp(50), font_size=dp(15))
         form.add_widget(self.size_input)
-        self.fields["batch_size"] = self.size_input
 
         scroll.add_widget(form)
         self.add_widget(scroll)
@@ -480,10 +473,10 @@ class BottlingForm(BoxLayout):
 
     def collect(self):
         return {
-            "date":        self.date_input.text.strip(),
-            "production":  self.selected_production,
-            "batch_no":    self.batch_input.text.strip(),
-            "batch_size":  self.size_input.text.strip(),
+            "date":       self.date_input.text.strip(),
+            "production": self.selected_production,
+            "batch_no":   self.batch_input.text.strip(),
+            "batch_size": self.size_input.text.strip(),
         }
 
     def preview(self, instance):
@@ -544,11 +537,11 @@ class BottlingForm(BoxLayout):
 # ============================================================
 # 7. APP
 # ============================================================
-class BottlingApp(App):
+class ProductionBatchTrackerApp(App):
     def build(self):
-        self.title = "Bottling Entry"
-        return BottlingForm()
+        self.title = "Production Batch Tracker"
+        return ProductionBatchTrackerForm()
 
 
 if __name__ == "__main__":
-    BottlingApp().run()
+    ProductionBatchTrackerApp().run()
