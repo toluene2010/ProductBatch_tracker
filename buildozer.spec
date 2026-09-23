@@ -1,7 +1,7 @@
 [app]
-title = ProductionBatch_Tracker Entry
-package.name = productionBatch_TrackerEntry
-package.domain = com.productionBatch_Tracker
+title = Production Batch Tracker Entry
+package.name = productionbatchtracker
+package.domain = com.productionbatchtracker
 
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json,txt
