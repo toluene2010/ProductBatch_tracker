@@ -8,7 +8,7 @@ source.include_exts = py,png,jpg,kv,atlas,json,txt
 source.exclude_dirs = bin,.buildozer
 version = 1.0.0
 
-requirements = python3,kivy,requests,urllib3,chardet,idna,certifi,jnius
+requirements = python3,kivy,requests,urllib3,chardet,idna,certifi
 
 orientation = portrait
 fullscreen = 0
