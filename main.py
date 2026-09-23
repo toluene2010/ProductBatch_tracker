@@ -22,7 +22,7 @@ from kivy.uix.textinput import TextInput
 # ============================================================
 # 1. CONFIG  — REPLACE WITH YOUR FORM URL
 # ============================================================
-FORM_URL = "https://docs.google.com/forms/d/e/YOUR_BOTTLING_FORM_ID/formResponse"
+FORM_URL = "https://docs.google.com/forms/d/e/1mwo5IXXrIu4bnqR8GOV1qNxQ31rdfdUjeLfBQf22t1M/formResponse"
 
 ENTRY_IDS = {
     "date_year":  "entry.2136503892_year",
